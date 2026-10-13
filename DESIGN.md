@@ -5,10 +5,10 @@ Inspired by the clarity of America.gov and the type principles of the U.S. Web D
 
 ## Principles
 - Clean white background, high contrast, generous whitespace
-- Public Sans for body and UI (USWDS-aligned)
-- Merriweather for headings (serif authority)
-- Gold and red used only for timeline markers — not as general accents
+- Public Sans throughout (light weight on large headings to approximate America.gov)
+- Gold and red used only as subtle timeline line accents — not as general accents
 - Light mode only
+- No timeline dots (clean vertical line only)
 - Components defined so future changes stay consistent
 
 ## Colors
@@ -19,19 +19,19 @@ Inspired by the clarity of America.gov and the type principles of the U.S. Web D
 | `--color-text-muted` | `#3d4551` | Secondary text |
 | `--color-border` | `#dfe1e2` | Borders, dividers |
 | `--color-surface` | `#f8f9fa` | Subtle backgrounds |
-| `--color-primary` | `#005ea2` | Links, active filters, default markers |
-| `--color-gold` | `#ffbe2e` | Gold-era / founding markers |
-| `--color-red` | `#d83933` | War / crisis markers |
-| `--color-green` | `#00a91c` | Future markers |
+| `--color-primary` | `#005ea2` | Links, active filters |
+| `--color-gold` | `#ffbe2e` | Timeline line accent |
+| `--color-red` | `#d83933` | Timeline line accent |
+| `--color-green` | `#00a91c` | Future accent |
 
 ## Typography
-- **Body / UI**: Public Sans
-- **Headings**: Merriweather (weight 400)
+- **Body / UI / Headings**: Public Sans
+- Large headings use light weight (300) and tight tracking to echo America.gov
 
 ## Components defined
-- Header
+- Header (large light heading)
 - Filter controls (pill buttons)
-- Timeline line + event dots (color-coded)
+- Timeline line (no dots)
 - Cards (hover, open state)
 - Age tabs
 - Facts callouts
