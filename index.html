@@ -22,9 +22,6 @@
     </svg>
     <h1>USA National Debt</h1>
   </div>
-  <h2 class="subtitle" id="view-title">Living Timeline</h2>
-  <p id="view-desc">A central, expandable history of how America has borrowed, managed money, and shifted from hard currency to managed fiat. Built for family curriculum — younger ages get the story, older ages get the mechanisms, reasoning, and results.</p>
-  <p class="alt-journey" id="view-switch">or <a href="#" id="switch-to-questions">try a question-based journey</a></p>
 </header>
 
 <div id="timeline-view">
@@ -368,30 +365,8 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('questions-view').classList.remove('active');
   document.getElementById('timeline-view').classList.remove('hidden');
 });
-function showQuestions() {
-  document.getElementById('timeline-view').classList.add('hidden');
-  document.getElementById('questions-view').classList.add('active');
-  document.getElementById('view-title').textContent = 'Questions';
-  document.getElementById('view-desc').textContent = 'Key questions people ask about the national debt — how it works, who holds it, and where the current path leads.';
-  document.getElementById('view-switch').innerHTML = '<a href="#" id="switch-to-timeline">← back to the timeline</a>';
-  document.getElementById('switch-to-timeline').addEventListener('click', function(e) {
-    e.preventDefault();
-    showTimeline();
-  });
-  window.scrollTo(0, 0);
-}
-function showTimeline() {
-  document.getElementById('questions-view').classList.remove('active');
-  document.getElementById('timeline-view').classList.remove('hidden');
-  document.getElementById('view-title').textContent = 'Living Timeline';
-  document.getElementById('view-desc').textContent = 'A central, expandable history of how America has borrowed, managed money, and shifted from hard currency to managed fiat. Built for family curriculum — younger ages get the story, older ages get the mechanisms, reasoning, and results.';
-  document.getElementById('view-switch').innerHTML = 'or <a href="#" id="switch-to-questions">try a question-based journey</a>';
-  document.getElementById('switch-to-questions').addEventListener('click', function(e) {
-    e.preventDefault();
-    showQuestions();
-  });
-  window.scrollTo(0, 0);
-}
+
+
 document.getElementById('switch-to-questions').addEventListener('click', function(e) {
   e.preventDefault();
   showQuestions();
