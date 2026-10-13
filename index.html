@@ -22,6 +22,9 @@
     </svg>
     <h1>USA National Debt</h1>
   </div>
+  <h2 class="subtitle">Living Timeline</h2>
+  <p>A central, expandable history of how America has borrowed, managed money, and shifted from hard currency to managed fiat. Built for family curriculum — younger ages get the story, older ages get the mechanisms, reasoning, and results.</p>
+  <p class="alt-journey">or <a href="#" id="switch-to-questions">try a question-based journey</a></p>
 </header>
 
 <div id="timeline-view">
@@ -369,7 +372,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.getElementById('switch-to-questions').addEventListener('click', function(e) {
   e.preventDefault();
-  showQuestions();
+  document.getElementById('timeline-view').style.display = 'none';
+  document.getElementById('questions-view').style.display = 'block';
+  document.querySelector('.subtitle').textContent = 'Questions';
+  document.querySelector('header p:not(.alt-journey)').textContent = 'Key questions people ask about the national debt — how it works, who holds it, and where the current path leads.';
+  document.querySelector('.alt-journey').innerHTML = '<a href="#" id="back-to-timeline">← back to the timeline</a>';
+  document.getElementById('back-to-timeline').addEventListener('click', function(ev) {
+    ev.preventDefault();
+    location.reload();
+  });
+  window.scrollTo(0, 0);
 });
 </script>
 </body>
