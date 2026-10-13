@@ -307,3 +307,61 @@ footer {
 }
 .q-card.open .q-answer { display: block; }
 .q-answer p { margin: 0.75rem 0 0; }
+
+/* View switching — force isolation */
+#timeline-view,
+#questions-view {
+  display: block;
+}
+#questions-view {
+  display: none;
+}
+#questions-view.active {
+  display: block;
+}
+#timeline-view.hidden {
+  display: none;
+}
+
+/* Brand — stack icon above title, centered */
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.brand .icon {
+  width: 80px;
+  height: 56px;
+}
+.brand h1 {
+  margin: 0;
+  text-align: center;
+}
+
+/* Questions cards — stronger card look */
+.q-card {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0,12,31,0.06);
+}
+.q-header {
+  padding: 1rem 1.25rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.q-answer {
+  display: none;
+  padding: 0 1.25rem 1rem;
+  color: var(--color-text-muted);
+  border-top: 1px solid var(--color-border);
+}
+.q-card.open .q-answer {
+  display: block;
+}
