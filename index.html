@@ -376,7 +376,15 @@
 
 <script>
 function toggle(card) {
-  card.parentElement.classList.toggle('open');
+  const parent = card.parentElement;
+  const wasOpen = parent.classList.contains('open');
+  // Close all other events
+  document.querySelectorAll('.event.open').forEach(el => {
+    if (el !== parent) el.classList.remove('open');
+  });
+  // Toggle the clicked one
+  if (!wasOpen) parent.classList.add('open');
+  else parent.classList.remove('open');
 }
 function showTab(e, btn, id) {
   e.stopPropagation();
@@ -399,7 +407,15 @@ function filter(era) {
 }
 
 function toggleQ(header) {
-  header.parentElement.classList.toggle('open');
+  const parent = header.parentElement;
+  const wasOpen = parent.classList.contains('open');
+  // Close all other questions
+  document.querySelectorAll('.q-card.open').forEach(el => {
+    if (el !== parent) el.classList.remove('open');
+  });
+  // Toggle the clicked one
+  if (!wasOpen) parent.classList.add('open');
+  else parent.classList.remove('open');
 }
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('questions-view').classList.remove('active');
