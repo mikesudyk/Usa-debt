@@ -5,8 +5,9 @@ Inspired by the clarity of America.gov and the type principles of the U.S. Web D
 
 ## Principles
 - Clean white background, high contrast, generous whitespace
-- Public Sans throughout (light weight on large headings to approximate America.gov)
-- Gold and red used only as subtle timeline line accents — not as general accents
+- Public Sans for body and UI
+- Instrument Serif for headings (closest free match to America.gov’s Rhymes Text display serif)
+- Gold and red used only as subtle timeline line accents
 - Light mode only
 - No timeline dots (clean vertical line only)
 - Components defined so future changes stay consistent
@@ -25,11 +26,11 @@ Inspired by the clarity of America.gov and the type principles of the U.S. Web D
 | `--color-green` | `#00a91c` | Future accent |
 
 ## Typography
-- **Body / UI / Headings**: Public Sans
-- Large headings use light weight (300) and tight tracking to echo America.gov
+- **Body / UI**: Public Sans
+- **Headings**: Instrument Serif (large size, tight tracking on h1 to echo America.gov)
 
 ## Components defined
-- Header (large light heading)
+- Header (large Instrument Serif title)
 - Filter controls (pill buttons)
 - Timeline line (no dots)
 - Cards (hover, open state)
