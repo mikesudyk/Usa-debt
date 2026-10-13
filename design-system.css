@@ -1,5 +1,229 @@
-/* existing styles remain; new rules appended below */
+/* US Debt Timeline — Design System
+   Inspired by America.gov + USWDS principles
+   Light mode only. Public Sans body, Merriweather headings.
+   Gold and red reserved for timeline markers.
+*/
 
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Public+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Core colors — light, professional, America.gov-inspired */
+  --color-bg: #ffffff;
+  --color-text: #000c1f;
+  --color-text-muted: #3d4551;
+  --color-border: #dfe1e2;
+  --color-surface: #f8f9fa;
+  --color-surface-raised: #ffffff;
+
+  /* Accents — restrained, used sparingly */
+  --color-primary: #005ea2;          /* USWDS primary blue — links, active states */
+  --color-primary-hover: #1a4480;
+  --color-gold: #ffbe2e;             /* Timeline gold markers */
+  --color-gold-dark: #e5a000;
+  --color-red: #d83933;              /* Timeline war/crisis markers */
+  --color-red-dark: #b50909;
+  --color-green: #00a91c;            /* Future / positive markers */
+
+  /* Typography */
+  --font-sans: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: "Merriweather", Georgia, "Times New Roman", serif;
+
+  /* Spacing & shape */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-pill: 9999px;
+  --shadow-sm: 0 1px 2px rgba(0, 12, 31, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 12, 31, 0.08);
+}
+
+/* Base */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  font-size: 1.05rem;
+}
+
+/* Typography */
+h1, h2, h3, .font-serif {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--color-text);
+}
+h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); margin: 0 0 0.75rem; }
+h2 { font-size: 1.45rem; margin: 0 0 0.35rem; }
+p { margin: 0.5rem 0; }
+a { color: var(--color-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Layout */
+header {
+  padding: 3rem 1.5rem 2rem;
+  text-align: center;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+header p {
+  color: var(--color-text-muted);
+  max-width: 42rem;
+  margin-inline: auto;
+  font-size: 1.1rem;
+}
+
+/* Controls / filters */
+.controls {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 1rem 1rem;
+  background: var(--color-surface);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid var(--color-border);
+}
+button {
+  font-family: var(--font-sans);
+  background: var(--color-surface-raised);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  padding: 0.45rem 1.1rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+button:hover { border-color: var(--color-primary); color: var(--color-primary); }
+button.active {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+/* Timeline */
+.timeline {
+  max-width: 860px;
+  margin: 2.5rem auto 4rem;
+  padding: 0 1.25rem;
+  position: relative;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 1.75rem;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--color-gold), var(--color-primary), var(--color-red));
+  border-radius: 2px;
+}
+.event {
+  position: relative;
+  margin-bottom: 1.75rem;
+  padding-left: 4rem;
+}
+.event::before {
+  content: "";
+  position: absolute;
+  left: 1.15rem;
+  top: 1.35rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: 3px solid var(--color-bg);
+  box-shadow: var(--shadow-sm);
+  z-index: 1;
+}
+.event.gold::before { background: var(--color-gold); }
+.event.war::before { background: var(--color-red); }
+.event.future::before { background: var(--color-green); }
+
+/* Cards */
+.card {
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
+}
+.card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+.date {
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.summary { color: var(--color-text-muted); margin-top: 0.4rem; }
+
+/* Details / tabs */
+.details {
+  display: none;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+}
+.event.open .details { display: block; }
+.tabs { display: flex; gap: 0.4rem; margin-bottom: 0.85rem; flex-wrap: wrap; }
+.tab {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+.tab.active {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.facts {
+  background: var(--color-surface);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  margin: 0.75rem 0 0;
+  font-size: 0.92rem;
+  border-left: 3px solid var(--color-gold);
+}
+.facts strong { color: var(--color-text); }
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .timeline::before { left: 1.1rem; }
+  .event { padding-left: 3.2rem; }
+  .event::before { left: 0.55rem; }
+  header { padding: 2rem 1rem 1.5rem; }
+}
+
+
+/* Brand / header icon */
 .brand {
   display: flex;
   align-items: center;
@@ -38,6 +262,8 @@
 .alt-journey a:hover {
   border-bottom-color: var(--color-primary);
 }
+
+/* Questions view */
 .questions-header {
   max-width: 720px;
   margin: 2.5rem auto 1.5rem;
