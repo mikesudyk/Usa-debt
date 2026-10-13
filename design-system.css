@@ -405,3 +405,25 @@ footer {
 .controls {
   transition: transform 0.25s ease;
 }
+
+/* Circular era icons next to titles */
+.era-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #f8f9fa;
+  border: 1px solid #dfe1e2;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #000c1f;
+  margin-right: 0.45rem;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.era-icon.coin { background: #fff8e6; border-color: #e5a000; color: #8a6d00; }
+.era-icon.war { background: #fde8e6; border-color: #d83933; color: #8b1e1a; }
+.era-icon.person { background: #e8f0fe; border-color: #005ea2; color: #003d6b; }
+h2 { display: flex; align-items: center; }
