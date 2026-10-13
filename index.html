@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US National Debt Timeline — Living Curriculum</title>
+<meta name="description" content="Interactive living timeline of U.S. national debt history, money system shifts from gold to fiat, wars, and current/future fiscal policy. Family curriculum resource.">
+<style>
+  :root {
+    --bg: #0f1419;
+    --card: #1a2332;
+    --text: #e7e9ea;
+    --muted: #8b98a5;
+    --accent: #1d9bf0;
+    --gold: #f5c518;
+    --red: #f4212e;
+    --green: #00ba7c;
+    --border: #2f3336;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  header {
+    padding: 2rem 1.5rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 { margin: 0 0 0.5rem; font-size: 1.8rem; }
+  header p { margin: 0; color: var(--muted); max-width: 700px; margin-inline: auto; }
+  .controls {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 1rem;
+    background: #15202b;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid var(--border);
+  }
+  button, select {
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  button.active, button:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .timeline {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1rem 4rem;
+    position: relative;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 2rem;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--gold), var(--accent), var(--red));
+  }
+  .event {
+    position: relative;
+    margin-bottom: 2rem;
+    padding-left: 4.5rem;
+  }
+  .event::before {
+    content: "";
+    position: absolute;
+    left: 1.4rem;
+    top: 1.2rem;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid var(--bg);
+    z-index: 1;
+  }
+  .event.gold::before { background: var(--gold); }
+  .event.war::before { background: var(--red); }
+  .event.future::before { background: var(--green); }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    cursor: pointer;
+    transition: transform 0.15s, border-color 0.15s;
+  }
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .card h2 { margin: 0 0 0.25rem; font-size: 1.25rem; }
+  .date { color: var(--accent); font-weight: 600; font-size: 0.9rem; }
+  .summary { color: var(--muted); margin: 0.5rem 0 0; }
+  .details {
+    display: none;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .event.open .details { display: block; }
+  .tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .tab {
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+  }
+  .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .facts { background: #0d1117; padding: 0.75rem 1rem; border-radius: 8px; margin: 0.75rem 0; font-size: 0.9rem; }
+  .facts strong { color: var(--gold); }
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 600px) {
+    .timeline::before { left: 1.2rem; }
+    .event { padding-left: 3.2rem; }
+    .event::before { left: 0.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>US National Debt — Living Timeline</h1>
+  <p>A central, expandable history of how America has borrowed, managed money, and shifted from hard currency to managed fiat. Built for family curriculum — younger ages get the story, older ages get the mechanisms, reasoning, and results.</p>
+</header>
+
+<div class="controls">
+  <button onclick="filter('all')" class="active" id="all">All Eras</button>
+  <button onclick="filter('founding')">Founding–Gold</button>
+  <button onclick="filter('wars')">Wars & Breaks</button>
+  <button onclick="filter('fiat')">Fiat Era</button>
+  <button onclick="filter('today')">Today & Future</button>
+</div>
+
+<div class="timeline" id="timeline">
+
+  <div class="event gold" data-era="founding">
+    <div class="card" onclick="toggle(this)">
+      <div class="date">1792</div>
+      <h2>Coinage Act — Gold & Silver Standard</h2>
+      <p class="summary">Congress defines the dollar in terms of gold and silver. Money is physical metal; government borrowing is expected to be repaid in hard currency.</p>
+      <div class="details">
+        <div class="tabs">
+          <button class="tab active" onclick="showTab(event, this, 'young')">Ages 1.5–10</button>
+          <button class="tab" onclick="showTab(event, this, 'older')">Ages 11–15</button>
+        </div>
+        <div class="tab-content active" id="young">
+          Money was shiny coins made of real gold and silver. If the government needed more money, it couldn’t just print paper — it had to get more metal.
+        </div>
+        <div class="tab-content" id="older">
+          The Coinage Act of 1792 established a bimetallic standard. This hard-money rule constrained both inflation and easy peacetime spending. Debt from the Revolution was real and expected to be serviced in specie. Philosophy: sound money as a limit on government.
+        </div>
+        <div class="facts"><strong>Result:</strong> Long periods of price stability. Debt existed but remained modest outside of wars.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event gold" data-era="founding">
+    <div class="card" onclick="toggle(this)">
+      <div class="date">1835</div>
+      <h2>Debt Nearly Paid Off</h2>
+      <p class="summary">Under Andrew Jackson the federal debt falls to almost zero — the only time in U.S. history.</p>
+      <div class="details">
+        <div class="tabs">
+          <button class="tab active" onclick="showTab(event, this, 'young')">Ages 1.5–10</button>
+          <button class="tab" onclick="showTab(event, this, 'older')">Ages 11–15</button>
+        </div>
+        <div class="tab-content active" id="young">The government paid back almost all the money it owed. For a short time America had basically no national debt.</div>
+        <div class="tab-content" id="older">Jackson’s administration used surpluses (largely from land sales and tariffs) to retire the debt. This remains the sole period of near-zero federal debt. It demonstrated that sustained surpluses were politically and economically possible under the hard-money regime.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event war" data-era="wars">
+    <div class="card" onclick="toggle(this)">
+      <div class="date">1861–1879</div>
+      <h2>Civil War Greenbacks & Return to Gold</h2>
+      <p class="summary">War forces unbacked paper money. Debt explodes. After the war the country works to restore gold convertibility.</p>
+      <div class="details">
+        <div class="tabs">
+          <button class="tab active" onclick="showTab(event, this, 'young')">Ages 1.5–10</button>
+          <button class="tab" onclick="showTab(event, this, 'older')">Ages 11–15</button>
+        </div>
+        <div class="tab-content active" id="young">During the big war the government printed special paper money that wasn’t backed by gold so it could pay soldiers. Later they tried to go back to using gold again.</div>
+        <div class="tab-content" id="older">Debt rose from ~$65 million (1860) to $2.7 billion (1866). Legal Tender Acts created greenbacks. The Resumption Act of 1875 restored gold convertibility by 1879. Wars create sudden fiscal pressure that hard-money rules struggle to absorb; restoring the old constraint takes political will and time.</div>
+        <div class="facts"><strong>Debt path:</strong> $65M → $2.7B. <strong>Result:</strong> Temporary inflation, then multi-decade effort to return to gold and pay down debt.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event" data-era="wars">
+    <div class="card" onclick="toggle(this)">
+      <div class="date">1913</div>
+      <h2>Federal Reserve Act</h2>
+      <p class="summary">A central bank is created that can expand credit and act as lender of last resort, even while gold convertibility still exists.</p>
+      <div class="details">
+        <div class="tabs">
+          <button class="tab active" onclick="showTab(event, this, 'young')">Ages 1.5–10</button>
+          <button class="tab" onclick="showTab(event, this, 'older')">Ages 11–15</button>
+        </div>
+        <div class="tab-content active" id="young">A new big bank was made that could help create more money when needed.</div>
+        <div class="tab-content" id="older">The Fed introduced discretionary monetary management inside a still-gold-linked system. This was a philosophical step toward active management of money and credit rather than pure automatic convertibility.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event war" data-era="wars">
+    <div class="card" onclick="toggle(this)">
+      <div class="date">1933–1934</div>
+      <h2>End of Domestic Gold Standard</h2>
+      <p class="summary">FDR requires Americans to turn in gold. Dollar is devalued. Private gold ownership ends. Domestic dollar becomes fiat.</p>
+      <div class="details">
+        <div class="tabs">
+          <button class="tab active" onclick="showTab(event, this, 'young')">Ages 1.5–10</button>
+          <button class="tab" onclick="showTab(event, this, 'older')">Ages 11–15</button>
+        </div>
+        <div class="tab-content active" id="young">The president said people had to give their gold coins to the government. Paper money was no longer tied to gold for regular people.</div>
+        <div class="tab-content" id="older">Executive Order 6102 (1933) and the Gold Reserve Act (1934) ended domestic convertibility and devalued the dollar ~40% against gold. Motivation: fight Depression deflation and give government more room to spend and manage the economy. Result: Americans could no longer redeem dollars for gold; international link remained for foreign governments.</div>
+        <div class="facts"><strong>Reasoning:</strong> Active management to combat deflation. <strong>Result:</strong> Greater government control over the domestic money supply.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event" data-era="wars">
+    <div class="card" onclick="toggle(this)">
+      <div class="date">1944</div>
+      <h2>Bretton Woods</h2>
+      <p class="summary">Dollar becomes the world’s anchor currency, convertible to gold for foreign governments at $35/oz. Other currencies peg to the dollar.</p>
+      <div class="details">
+        <div class="tabs">
+          <button class="tab active" onclick="showTab(event, this, 'young')">Ages 1.5–10</button>
+          <button class="tab" onclick="showTab(event, this, 'older')">Ages 11–15</button>
+        </div>
+        <div class="tab-content active" id="young">After the big war, other countries agreed to use the American dollar as their main money, and America promised they could trade dollars for gold.</div>
+        <div class="tab-content" id="older">Bretton Woods created a gold-dollar standard internationally while Americans already used fiat domestically. Post-WWII debt/GDP peaked near 113% then fell sharply during the boom as the economy grew faster than debt.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event war" data-era="fiat">
+    <div class="card" onclick="toggle(this)">
+      <div class="date">15 August 1971</div>
+      <h2>Nixon Closes the Gold Window</h2>
+      <p class="summary">The last formal link between the dollar and gold is severed. Pure fiat money begins. Currencies soon float.</p>
+      <div class="details">
+        <div class="tabs">
+          <button class="tab active" onclick="showTab(event, this, 'young')">Ages 1.5–10</button>
+          <button class="tab" onclick="showTab(event, this, 'older')">Ages 11–15</button>
+        </div>
+        <div class="tab-content active" id="young">The president said other countries could no longer trade their dollars for American gold. After that, money was just paper and computer numbers.</div>
+        <div class="tab-content" id="older">The “Nixon Shock” ended Bretton Woods convertibility. Spending pressures (Vietnam, domestic programs) had strained the $35 gold promise. Result: fully managed fiat dollar, floating exchange rates, and complete Fed discretion over the money supply. Mild positive inflation later becomes explicit policy.</div>
+        <div class="facts"><strong>Philosophical shift:</strong> From commodity or externally constrained money to pure fiat with an eventual ~2% inflation target.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event" data-era="fiat">
+    <div class="card" onclick="toggle(this)">
+      <div class="date">1971–2008</div>
+      <h2>Peacetime Deficits Become Normal</h2>
+      <p class="summary">Without a gold constraint, structural deficits appear. Debt rises and falls with policy and growth but the hard limit is gone.</p>
+      <div class="details">
+        <div class="tabs">
+          <button class="tab active" onclick="showTab(event, this, 'young')">Ages 1.5–10</button>
+          <button class="tab" onclick="showTab(event, this, 'older')">Ages 11–15</button>
+        </div>
+        <div class="tab-content active" id="young">The government started borrowing money even when there wasn’t a war, and it became harder to pay it all back.</div>
+        <div class="tab-content" id="older">Political incentives favor spending increases and tax cuts over restraint. Automatic growth in entitlements locks in higher baseline spending. The inflation target makes holding cash slowly lose value, pushing savings into real assets.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event war" data-era="fiat">
+    <div class="card" onclick="toggle(this)">
+      <div class="date">2008 & 2020</div>
+      <h2>Crisis Expansions</h2>
+      <p class="summary">Financial crisis and pandemic trigger massive Fed bond-buying and fiscal stimulus. Debt jumps and remains elevated.</p>
+      <div class="details">
+        <div class="tabs">
+          <button class="tab active" onclick="showTab(event, this, 'young')">Ages 1.5–10</button>
+          <button class="tab" onclick="showTab(event, this, 'older')">Ages 11–15</button>
+        </div>
+        <div class="tab-content active" id="young">When big problems happened, the government and its bank created a lot of new money and borrowed a lot more to try to help.</div>
+        <div class="tab-content" id="older">Quantitative easing expanded the Fed’s Treasury holdings dramatically. Deficits surged. Much of the new money initially supported asset prices more than immediate consumer inflation, but the debt stock ratcheted permanently higher.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event future" data-era="today">
+    <div class="card" onclick="toggle(this)">
+      <div class="date">October 2026</div>
+      <h2>Current Picture</h2>
+      <p class="summary">Total debt ~$40.3 trillion. Debt held by the public ~$32.4–32.5T. Interest costs ~$1.1–1.25T per year.</p>
+      <div class="details">
+        <div class="tabs">
+          <button class="tab active" onclick="showTab(event, this, 'young')">Ages 1.5–10</button>
+          <button class="tab" onclick="showTab(event, this, 'older')">Ages 11–15</button>
+        </div>
+        <div class="tab-content active" id="young">The government owes a huge amount of money. Most of it is owed to regular people, banks, and other countries — not just to itself.</div>
+        <div class="tab-content" id="older">
+          Debt held by the public is the economically relevant portion (owned by Fed ~$4.57T, mutual funds, pensions, individuals, foreigners ~$9.25T). Top foreign holders: Japan, UK, China. Intragovernmental holdings (~$7.8T) are mostly trust funds. Dollar reserve status and deep Treasury markets sustain demand. Inflation target + political incentives continue the pressure.
+        </div>
+        <div class="facts">
+          <strong>Total:</strong> ~$40.3T<br>
+          <strong>Held by public:</strong> ~$32.4T (~100% of GDP)<br>
+          <strong>Interest:</strong> ~$1.1–1.25T (2nd largest budget item)<br>
+          <strong>Foreign holdings:</strong> ~$9.25T
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event future" data-era="today">
+    <div class="card" onclick="toggle(this)">
+      <div class="date">2030s (projections)</div>
+      <h2>Where Current Policy Points</h2>
+      <p class="summary">Under current law, debt held by the public is projected to reach ~120% of GDP by 2036. Interest costs continue rising. Social Security trust-fund pressure arrives ~2032.</p>
+      <div class="details">
+        <div class="tabs">
+          <button class="tab active" onclick="showTab(event, this, 'young')">Ages 1.5–10</button>
+          <button class="tab" onclick="showTab(event, this, 'older')">Ages 11–15</button>
+        </div>
+        <div class="tab-content active" id="young">If nothing changes, the amount the government owes will keep growing faster than the economy, and more money will go just to paying interest.</div>
+        <div class="tab-content" id="older">
+          CBO February 2026 baseline: debt/GDP to 120% by 2036, interest toward $2T. Higher rates accelerate the path. Political difficulty of cutting entitlements or raising broad taxes makes large primary surpluses unlikely without a crisis or major reform. Base case is gradual erosion of fiscal space; tail risk is loss of confidence and faster rate rise.
+        </div>
+        <div class="facts"><strong>Key tension:</strong> System can continue while dollar demand and real growth hold. Sustainability is not guaranteed indefinitely under unchanged policy.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Living curriculum timeline — US national debt history, money-system shifts, and current/future policy path.<br>
+  Data drawn from Treasury, CBO, and historical records. Expand any card for age-tiered explanations.
+</footer>
+
+<script>
+function toggle(card) {
+  card.parentElement.classList.toggle('open');
+}
+function showTab(e, btn, id) {
+  e.stopPropagation();
+  const details = btn.closest('.details');
+  details.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  details.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  details.querySelector('#' + id).classList.add('active');
+}
+function filter(era) {
+  document.querySelectorAll('.controls button').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.event').forEach(ev => {
+    if (era === 'all' || ev.dataset.era === era) {
+      ev.style.display = 'block';
+    } else {
+      ev.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>
