@@ -10,10 +10,24 @@
 <body>
 
 <header>
-  <h1>US National Debt — Living Timeline</h1>
+  <div class="brand">
+    <svg class="icon" viewBox="0 0 72 48" aria-hidden="true">
+      <rect x="2" y="4" width="32" height="20" rx="1.5" fill="#b31942"/>
+      <rect x="2" y="4" width="32" height="3.2" fill="#fff"/>
+      <rect x="2" y="10.4" width="32" height="3.2" fill="#fff"/>
+      <rect x="2" y="16.8" width="32" height="3.2" fill="#fff"/>
+      <rect x="2" y="4" width="14" height="11" fill="#0a3161"/>
+      <circle cx="50" cy="28" r="16" fill="#ffbe2e" stroke="#c48a00" stroke-width="1.2"/>
+      <text x="50" y="34" text-anchor="middle" font-family="system-ui,sans-serif" font-size="18" font-weight="700" fill="#000c1f">$</text>
+    </svg>
+    <h1>USA National Debt</h1>
+  </div>
+  <h2 class="subtitle">Living Timeline</h2>
   <p>A central, expandable history of how America has borrowed, managed money, and shifted from hard currency to managed fiat. Built for family curriculum — younger ages get the story, older ages get the mechanisms, reasoning, and results.</p>
+  <p class="alt-journey">or <a href="#" id="switch-to-questions">try a question-based journey</a></p>
 </header>
 
+<div id="timeline-view">
 <div class="controls">
   <button onclick="filter('all')" class="active" id="all">All Eras</button>
   <button onclick="filter('founding')">Founding–Gold</button>
@@ -24,6 +38,7 @@
 
 <div class="timeline" id="timeline">
 
+  <!-- FOUNDING ERA — expanded -->
   <div class="event gold" data-era="founding">
     <div class="card" onclick="toggle(this)">
       <div class="date">1790</div>
@@ -109,6 +124,7 @@
     </div>
   </div>
 
+  <!-- Rest of timeline unchanged -->
   <div class="event war" data-era="wars">
     <div class="card" onclick="toggle(this)">
       <div class="date">1861–1879</div>
@@ -268,6 +284,53 @@
   </div>
 
 </div>
+</div>
+
+<div id="questions-view" style="display:none;">
+  <div class="questions-header">
+    <p class="alt-journey"><a href="#" id="switch-to-timeline">← back to the timeline</a></p>
+    <h2>Question-Based Journey</h2>
+    <p>The core questions that explain how the system works today.</p>
+  </div>
+  <div class="questions">
+    <div class="q-card">
+      <div class="q-header" onclick="toggleQ(this)">How can the USA sustain such a high national debt?</div>
+      <div class="q-answer">
+        <p>The debt is sustainable while investors remain willing to lend to the U.S. government at acceptable rates. That willingness rests on the dollar’s reserve-currency role, the depth of Treasury markets, the U.S. tax base, and the Federal Reserve’s ability to manage rates. It is not free: rising interest costs crowd out other spending, and confidence can weaken if deficits grow faster than the economy for too long.</p>
+      </div>
+    </div>
+    <div class="q-card">
+      <div class="q-header" onclick="toggleQ(this)">Who are we in debt to? What does “debt held by the public” mean?</div>
+      <div class="q-answer">
+        <p>Debt held by the public is the portion owned by outside investors — individuals, mutual funds, pension funds, banks, the Federal Reserve, and foreign governments. It is the economically meaningful measure. Intragovernmental holdings (mostly Social Security and other trust funds) are internal accounting entries. Roughly a quarter of the public debt is held by foreigners (Japan, the UK, China, and others); the rest is domestic.</p>
+      </div>
+    </div>
+    <div class="q-card">
+      <div class="q-header" onclick="toggleQ(this)">How do Treasury securities work?</div>
+      <div class="q-answer">
+        <p>The Treasury borrows by auctioning securities (bills, notes, bonds, and inflation-protected securities). Investors bid; the highest prices (lowest yields) win. The government pays interest and returns principal at maturity. These securities are among the world’s safest and most liquid assets, which helps sustain demand even as the stock of debt grows.</p>
+      </div>
+    </div>
+    <div class="q-card">
+      <div class="q-header" onclick="toggleQ(this)">Can the U.S. government really just print more money?</div>
+      <div class="q-answer">
+        <p>In a pure fiat system the Federal Reserve can create bank reserves and purchase Treasuries. That expands the money supply. It does not create real goods or services. If money grows faster than the economy’s productive capacity, the result is inflation. Creating money is a policy choice with consequences, not a free lunch.</p>
+      </div>
+    </div>
+    <div class="q-card">
+      <div class="q-header" onclick="toggleQ(this)">How does inflation work in this context?</div>
+      <div class="q-answer">
+        <p>Inflation is a sustained rise in the general price level. The current regime targets roughly 2% inflation. That means cash and fixed claims slowly lose purchasing power. The target gives the central bank room to lower real rates in a downturn, but it also means savers must put money into real assets or accept gradual erosion.</p>
+      </div>
+    </div>
+    <div class="q-card">
+      <div class="q-header" onclick="toggleQ(this)">Why is inflation treated as the baseline? Is there a model where the dollar gains value?</div>
+      <div class="q-answer">
+        <p>Under a commodity standard the money supply was constrained by the metal, so prices could fall as well as rise. The post-1971 pure fiat system with an explicit inflation target makes mild inflation the policy baseline. A model in which the dollar gains value over time would require an external constraint — a commodity link, a fixed supply rule, or a hard fiscal limit — that prevents continuous expansion of money relative to real output.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <footer>
   Living curriculum timeline — US national debt history, money-system shifts, and current/future policy path.<br>
@@ -297,6 +360,22 @@ function filter(era) {
     }
   });
 }
+
+function toggleQ(header) {
+  header.parentElement.classList.toggle('open');
+}
+document.getElementById('switch-to-questions').addEventListener('click', function(e) {
+  e.preventDefault();
+  document.getElementById('timeline-view').style.display = 'none';
+  document.getElementById('questions-view').style.display = 'block';
+  window.scrollTo(0, 0);
+});
+document.getElementById('switch-to-timeline').addEventListener('click', function(e) {
+  e.preventDefault();
+  document.getElementById('questions-view').style.display = 'none';
+  document.getElementById('timeline-view').style.display = 'block';
+  window.scrollTo(0, 0);
+});
 </script>
 </body>
 </html>
