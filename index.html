@@ -417,6 +417,19 @@ function updatePills() {
 }
 window.addEventListener('scroll', updatePills);
 document.addEventListener('DOMContentLoaded', updatePills);
+
+let lastScroll = 0;
+const controls = document.querySelector('.controls');
+window.addEventListener('scroll', function() {
+  const current = window.scrollY;
+  if (!controls) return;
+  if (current > lastScroll && current > 80) {
+    controls.classList.add('hide-on-scroll');
+  } else {
+    controls.classList.remove('hide-on-scroll');
+  }
+  lastScroll = current;
+}, { passive: true });
 </script>
 </body>
 </html>
